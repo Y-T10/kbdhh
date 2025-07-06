@@ -27,6 +27,11 @@
 
 #define VK_INVAILED 0x00ff
 
+// キーボードレイアウトのサブタイプ
+#define KBD_SUB_TYPE 0xff
+// 製造元のID
+#define OEM_ID 0xff // TODO: 個人制作の場合にどうするかを調べる
+
 static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
     [0x00] =  VK_INVAILED,
     [0x01] = VK_ESCAPE,
@@ -185,3 +190,34 @@ static const ATTR_KBD_DATA VSC_VK E0Scancode2VK[] = {
 static const ATTR_KBD_DATA VSC_VK E1Scancode2VK[] = {
     {0x1D, VK_PAUSE}
 };
+
+// レイアウト情報
+const ATTR_KBD_DATA KBDTABLES TablesHH = {
+    // スキャンコード変換情報
+    .pusVSCtoVK = Scancode2VK,
+    .bMaxVSCtoVK = sizeof(Scancode2VK) / sizeof(Scancode2VK[0]),
+    .pVSCtoVK_E0 = E0Scancode2VK,
+    .pVSCtoVK_E1 = E1Scancode2VK,
+
+    // レイアウト情報
+    .dwType = KEYBOARD_TYPE_JAPAN,
+    .dwSubType = MAKEWORD(KBD_SUB_TYPE, OEM_ID)
+};
+
+//  言語固有のレイアウト情報
+const ATTR_KBD_DATA KBDNLSTABLES NLSTablesHH = {
+    .OEMIdentifier = OEM_ID,
+    .LayoutInformation = 0,
+    .NumOfMouseVKey = 0,
+    .pusMouseVKey = NULL
+};
+
+// キーボードレイアウト情報を返す
+const KBDTABLES* KbdLayerDescriptor() {
+    return &TablesHH;
+}
+
+// 言語固有の機能情報を返す
+const KBDNLSTABLES* KbdNlsLayerDescriptor() {
+    return &NLSTablesHH;
+}
