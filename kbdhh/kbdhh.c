@@ -157,3 +157,31 @@ static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
     [0x7e] = 0xC2,           // 予約済仮想キーコード
     [0x7f] = VK_OEM_PA2,
 };
+
+// AX105をベースにいくつかのキーを追加
+// TODO: 未対応の拡張キーを追加する
+static const ATTR_KBD_DATA VSC_VK E0Scancode2VK[] = {
+  {0x1c, KBDEXT | VK_MEDIA_PREV_TRACK },
+  {0x35, KBDEXT | VK_DIVIDE},
+  {0x37, KBDEXT | VK_SNAPSHOT},
+  {0x38, KBDEXT | VK_RMENU}, // VK_KANJI | KBDSPECIAL から修正
+  {0X46, KBDEXT | VK_CANCEL}, // Break key (by Ctrl pasue)
+  {0X47, KBDEXT | VK_HOME},
+  {0X48, KBDEXT | VK_UP},
+  {0X49, KBDEXT | VK_PRIOR},
+  {0X4B, KBDEXT | VK_LEFT},
+  {0X4D, KBDEXT | VK_RIGHT},
+  {0X4F, KBDEXT | VK_END},
+  {0x50, KBDEXT | VK_DOWN},
+  {0x51, KBDEXT | VK_NEXT},
+  {0x52, KBDEXT | VK_INSERT },
+  {0x53, KBDEXT | VK_DELETE},
+  {0x5b, KBDEXT | VK_LWIN},
+  {0x5c, KBDEXT | VK_RWIN},
+  {0x5d, KBDEXT | VK_APPS},
+};
+
+// E1接頭辞付キー
+static const ATTR_KBD_DATA VSC_VK E1Scancode2VK[] = {
+    {0x1D, VK_PAUSE}
+};
