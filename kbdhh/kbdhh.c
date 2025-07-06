@@ -203,3 +203,11 @@ const ATTR_KBD_DATA KBDTABLES TablesHH = {
     .dwType = KEYBOARD_TYPE_JAPAN,
     .dwSubType = MAKEWORD(KBD_SUB_TYPE, OEM_ID)
 };
+
+//  言語固有のレイアウト情報
+const ATTR_KBD_DATA KBDNLSTABLES NLSTablesHH = {
+    .OEMIdentifier = OEM_ID,
+    .LayoutInformation = 0,
+    .NumOfMouseVKey = 0,
+    .pusMouseVKey = NULL
+};
