@@ -211,3 +211,13 @@ const ATTR_KBD_DATA KBDNLSTABLES NLSTablesHH = {
     .NumOfMouseVKey = 0,
     .pusMouseVKey = NULL
 };
+
+// キーボードレイアウト情報を返す
+const KBDTABLES* KbdLayerDescriptor() {
+    return &TablesHH;
+}
+
+// 言語固有の機能情報を返す
+const KBDNLSTABLES* KbdNlsLayerDescriptor() {
+    return &NLSTablesHH;
+}
