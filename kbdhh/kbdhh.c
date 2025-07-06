@@ -27,6 +27,11 @@
 
 #define VK_INVAILED 0x00ff
 
+// キーボードレイアウトのサブタイプ
+#define KBD_SUB_TYPE 0xff
+// 製造元のID
+#define OEM_ID 0xff // TODO: 個人制作の場合にどうするかを調べる
+
 static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
     [0x00] =  VK_INVAILED,
     [0x01] = VK_ESCAPE,
