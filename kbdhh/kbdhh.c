@@ -190,3 +190,16 @@ static const ATTR_KBD_DATA VSC_VK E0Scancode2VK[] = {
 static const ATTR_KBD_DATA VSC_VK E1Scancode2VK[] = {
     {0x1D, VK_PAUSE}
 };
+
+// レイアウト情報
+const ATTR_KBD_DATA KBDTABLES TablesHH = {
+    // スキャンコード変換情報
+    .pusVSCtoVK = Scancode2VK,
+    .bMaxVSCtoVK = sizeof(Scancode2VK) / sizeof(Scancode2VK[0]),
+    .pVSCtoVK_E0 = E0Scancode2VK,
+    .pVSCtoVK_E1 = E1Scancode2VK,
+
+    // レイアウト情報
+    .dwType = KEYBOARD_TYPE_JAPAN,
+    .dwSubType = MAKEWORD(KBD_SUB_TYPE, OEM_ID)
+};
