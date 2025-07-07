@@ -284,6 +284,11 @@ const ATTR_KBD_DATA KBDTABLES TablesHH = {
     .pVSCtoVK_E0 = E0Scancode2VK,
     .pVSCtoVK_E1 = E1Scancode2VK,
 
+    // キー名
+    .pKeyNames = KeyName,
+    .pKeyNamesExt = KeyNameExt,
+    .pKeyNamesDead = NULL,
+
     // レイアウト情報
     .dwType = KEYBOARD_TYPE_JAPAN,
     .dwSubType = MAKEWORD(KBD_SUB_TYPE, OEM_ID)
