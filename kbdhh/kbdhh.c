@@ -62,7 +62,7 @@ static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
     [0x1a] = VK_OEM_4,
     [0x1b] = VK_OEM_6,
     [0x1c] = VK_RETURN,
-    [0x1d] = VK_CONTROL,
+    [0x1d] = VK_LCONTROL,
     [0x1e] = 'A',
     [0x1f] = 'S',
     [0x20] = 'D',
@@ -191,6 +191,90 @@ static const ATTR_KBD_DATA VSC_VK E1Scancode2VK[] = {
     {0x1D, VK_PAUSE}
 };
 
+// キー名リスト
+static const ATTR_KBD_DATA VSC_LPWSTR KeyName[] = {
+    {0x01, L"Esc"},
+    {0x0e, L"Backspace"},
+    {0x0f, L"Tab"},
+    {0x1c, L"Enter"},
+    {0x1d, L"Ctrl"},
+    {0x2a, L"Shift"},
+    {0x36, L"Right Shift"},
+    {0x37, L"Num *"},
+    {0x38, L"Alt"},
+    {0x39, L"Space"},
+    {0x3a, L"Caps Lock"},
+    {0x3b, L"F1"},
+    {0x3c, L"F2"},
+    {0x3d, L"F3"},
+    {0x3e, L"F4"},
+    {0x3f, L"F5"},
+    {0x40, L"F6"},
+    {0x41, L"F7"},
+    {0x42, L"F8"},
+    {0x43, L"F9"},
+    {0x44, L"F10"},
+    {0x45, L"Pause"},
+    {0x46, L"Scroll Lock"},
+    {0x47, L"Num 7"},
+    {0x48, L"Num 8"},
+    {0x49, L"Num 9"},
+    {0x4a, L"Num -"},
+    {0x4b, L"Num 4"},
+    {0x4c, L"Num 5"},
+    {0x4d, L"Num 6"},
+    {0x4e, L"Num +"},
+    {0x4f, L"Num 1"},
+    {0x50, L"Num 2"},
+    {0x51, L"Num 3"},
+    {0x52, L"Num 0"},
+    {0x53, L"Num Del"},
+    {0x54, L"Sys Req"},
+    {0x57, L"F11"},
+    {0x58, L"F12"},
+    {0x7b, L"無変換"},
+    {0x79, L"変換"},
+    {0x5c, L"AX"},
+    {0x7c, L"F13"},
+    {0x7d, L"F14"},
+    {0x7e, L"F15"},
+    {0x7f, L"F16"},
+    {0x80, L"F17"},
+    {0x81, L"F18"},
+    {0x82, L"F19"},
+    {0x83, L"F20"},
+    {0x84, L"F21"},
+    {0x85, L"F22"},
+    {0x86, L"F23"},
+    {0x87, L"F24"},
+    {0x00, NULL}
+};
+
+// 0xE0接頭辞付きキー名リスト
+static const ATTR_KBD_DATA VSC_LPWSTR KeyNameExt[] = {
+    {0x1c, L"Num Enter"},
+    {0x35, L"Num /"},
+    {0x37, L"Prnt Scrn"},
+    {0x38, L"Right Alt"},
+    {0x45, L"Num Lock"},
+    {0x46, L"Break"},
+    {0x47, L"Home"},
+    {0x48, L"Up"},
+    {0x49, L"Page Up"},
+    {0x4b, L"Left"},
+    {0x4d, L"Right"},
+    {0x4f, L"End"},
+    {0x50, L"Down"},
+    {0x51, L"Page Down"},
+    {0x52, L"Insert"},
+    {0x53, L"Delete"},
+    {0x56, L"Help"},
+    {0x5b, L"Left Windows"},
+    {0x5c, L"Right Windows"},
+    {0x5d, L"Application"},
+    {0x00, NULL}
+};
+
 // レイアウト情報
 const ATTR_KBD_DATA KBDTABLES TablesHH = {
     // スキャンコード変換情報
@@ -198,6 +282,11 @@ const ATTR_KBD_DATA KBDTABLES TablesHH = {
     .bMaxVSCtoVK = sizeof(Scancode2VK) / sizeof(Scancode2VK[0]),
     .pVSCtoVK_E0 = E0Scancode2VK,
     .pVSCtoVK_E1 = E1Scancode2VK,
+
+    // キー名
+    .pKeyNames = KeyName,
+    .pKeyNamesExt = KeyNameExt,
+    .pKeyNamesDead = NULL,
 
     // レイアウト情報
     .dwType = KEYBOARD_TYPE_JAPAN,
