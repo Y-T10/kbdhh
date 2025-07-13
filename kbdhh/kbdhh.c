@@ -302,6 +302,9 @@ static const ATTR_KBD_DATA MODIFIERS ModifierConf = {
 
 // レイアウト情報
 const ATTR_KBD_DATA KBDTABLES TablesHH = {
+    // 修飾情報
+    .pCharModifiers = &ModifierConf,
+
     // スキャンコード変換情報
     .pusVSCtoVK = Scancode2VK,
     .bMaxVSCtoVK = sizeof(Scancode2VK) / sizeof(Scancode2VK[0]),
