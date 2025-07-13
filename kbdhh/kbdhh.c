@@ -275,6 +275,31 @@ static const ATTR_KBD_DATA VSC_LPWSTR KeyNameExt[] = {
     {0x00, NULL}
 };
 
+// 修飾キーのビット位置を指定
+static const ATTR_KBD_DATA VK_TO_BIT VKBitPos[] = {
+    // 下記設定は必須
+    { VK_SHIFT   , KBDSHIFT},
+    { VK_CONTROL , KBDCTRL},
+    { VK_MENU    , KBDALT},
+    { 0          , 0 }
+};
+
+// 修飾キー情報
+static const ATTR_KBD_DATA MODIFIERS ModifierConf = {
+    .pVkToBit = (PVK_TO_BIT)(VKBitPos),
+    .wMaxModBits = 7,           // 修飾キー押下パターン個数
+    .ModNumber = {
+        [0b000] = 0,            // キー入力なし
+        [0b001] = 1,            // Shift押下
+        [0b010] = 2,            // Control押下
+        [0b011] = 3,            // Shift,Control押下
+        [0b100] = SHFT_INVALID, // Alt押下時に文字列を出力しない
+        [0b101] = SHFT_INVALID,
+        [0b110] = SHFT_INVALID,
+        [0b111] = SHFT_INVALID,
+    }
+};
+
 // レイアウト情報
 const ATTR_KBD_DATA KBDTABLES TablesHH = {
     // スキャンコード変換情報
