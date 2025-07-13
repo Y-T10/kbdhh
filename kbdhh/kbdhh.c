@@ -302,6 +302,17 @@ static const ATTR_KBD_DATA MODIFIERS ModifierConf = {
 
 // レイアウト情報
 const ATTR_KBD_DATA KBDTABLES TablesHH = {
+    // 言語固有の処理はない
+    .fLocaleFlags = 0,
+    
+    // デッドキーを使用しない
+    .pDeadKey = NULL,
+
+    // リガチャを使用しない
+    .pLigature = NULL,
+    .cbLgEntry = 0,
+    .nLgMax = 0,
+
     // 修飾情報
     .pCharModifiers = &ModifierConf,
 
