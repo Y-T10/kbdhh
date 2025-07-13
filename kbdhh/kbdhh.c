@@ -300,6 +300,20 @@ static const ATTR_KBD_DATA MODIFIERS ModifierConf = {
     }
 };
 
+static const ATTR_KBD_DATA VK_TO_WCHARS2 NumpadChars[] = {
+    {.VirtualKey = VK_NUMPAD0, .Attributes = 0, .wch = {L'0' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD1, .Attributes = 0, .wch = {L'1' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD2, .Attributes = 0, .wch = {L'2' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD3, .Attributes = 0, .wch = {L'3' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD4, .Attributes = 0, .wch = {L'4' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD5, .Attributes = 0, .wch = {L'5' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD6, .Attributes = 0, .wch = {L'6' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD7, .Attributes = 0, .wch = {L'7' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD8, .Attributes = 0, .wch = {L'8' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD9, .Attributes = 0, .wch = {L'9' , WCH_NONE}},
+    {.VirtualKey = 0         , .Attributes = 0, .wch = {L'\0',0        }}
+};
+
 // レイアウト情報
 const ATTR_KBD_DATA KBDTABLES TablesHH = {
     // 言語固有の処理はない
