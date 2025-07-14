@@ -395,6 +395,15 @@ static const ATTR_KBD_DATA VK_TO_WCHARS2 NumpadChars[] = {
     {.VirtualKey = 0         , .Attributes = 0, .wch = {L'\0',0        }}
 };
 
+// 印字情報一覧
+static const ATTR_KBD_DATA VK_TO_WCHAR_TABLE PrintedCharTables[] = {
+    {(PVK_TO_WCHARS1)(VKCharsAll)   , 4, sizeof(VKCharsAll[0])},
+    {(PVK_TO_WCHARS1)(VKCharsShCtr) , 3, sizeof(VKCharsShCtr[0])},
+    {(PVK_TO_WCHARS1)(VKCharsSh)    , 2, sizeof(VKCharsSh[0])},
+    {(PVK_TO_WCHARS1)(NumpadChars)  , 2, sizeof(NumpadChars[0])},
+    {NULL, 0, 0}
+};
+
 // レイアウト情報
 const ATTR_KBD_DATA KBDTABLES TablesHH = {
     // 言語固有の処理はない
