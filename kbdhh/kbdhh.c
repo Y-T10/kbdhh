@@ -32,6 +32,15 @@
 // 製造元のID
 #define OEM_ID 0xff // TODO: 個人制作の場合にどうするかを調べる
 
+// ASCII の制御文字定数
+#define ASCII_DEL  0x007f
+#define ASCII_EXT  0x0003
+#define ASCII_ESC  0x001b
+#define ASCII_FSEP 0x001c
+#define ASCII_GSEP 0x001d
+#define ASCII_RSEP 0x001e
+#define ASCII_USEP 0x001f
+
 static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
     [0x00] =  VK_INVAILED,
     [0x01] = VK_ESCAPE,
