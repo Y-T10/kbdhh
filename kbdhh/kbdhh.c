@@ -316,6 +316,19 @@ static const ATTR_KBD_DATA VK_TO_WCHARS4 VKCharsAll[] = {
     {.VirtualKey = 0            , .Attributes = 0, .wch = {L'\0'    , L'\0'     , L'\0'     , L'\0'     }}
 };
 
+static const ATTR_KBD_DATA VK_TO_WCHARS3 VKCharsShCtr[] = {
+    {.VirtualKey = VK_BACK      , .Attributes = 0, .wch = {L'\b'    , L'\b'    , ASCII_DEL }},
+    {.VirtualKey = VK_CANCEL    , .Attributes = 0, .wch = {ASCII_EXT, ASCII_EXT, ASCII_EXT }},
+    {.VirtualKey = VK_ESCAPE    , .Attributes = 0, .wch = {ASCII_ESC, ASCII_ESC, ASCII_ESC }},
+    {.VirtualKey = VK_OEM_4     , .Attributes = 0, .wch = {L'['     , L'{'     , ASCII_ESC }},
+    {.VirtualKey = VK_OEM_5     , .Attributes = 0, .wch = {L'\\'    , L'|'     , ASCII_ESC }},
+    {.VirtualKey = VK_OEM_102   , .Attributes = 0, .wch = {L'\\'    , L'|'     , ASCII_FSEP}},
+    {.VirtualKey = VK_OEM_6     , .Attributes = 0, .wch = {L']'     , L'}'     , ASCII_GSEP}},
+    {.VirtualKey = VK_RETURN    , .Attributes = 0, .wch = {L'\r'    , L'\r'    , L'\n'     }},
+    {.VirtualKey = VK_SPACE     , .Attributes = 0, .wch = {L' '     , L' '     , L' '      }},
+    {.VirtualKey = 0            , .Attributes = 0, .wch = {L'\0'    , L'\0'    , L'\0'     }}
+};
+
 static const ATTR_KBD_DATA VK_TO_WCHARS2 NumpadChars[] = {
     {.VirtualKey = VK_NUMPAD0, .Attributes = 0, .wch = {L'0' , WCH_NONE}},
     {.VirtualKey = VK_NUMPAD1, .Attributes = 0, .wch = {L'1' , WCH_NONE}},
