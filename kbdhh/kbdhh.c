@@ -406,6 +406,9 @@ static const ATTR_KBD_DATA VK_TO_WCHAR_TABLE PrintedCharTables[] = {
 
 // レイアウト情報
 const ATTR_KBD_DATA KBDTABLES TablesHH = {
+    // 印字テーブル
+    .pVkToWcharTable = PrintedCharTables,
+
     // 言語固有の処理はない
     .fLocaleFlags = 0,
     
