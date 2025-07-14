@@ -309,6 +309,13 @@ static const ATTR_KBD_DATA MODIFIERS ModifierConf = {
     }
 };
 
+static const ATTR_KBD_DATA VK_TO_WCHARS4 VKCharsAll[] = {
+    {.VirtualKey = '2'          , .Attributes = 0, .wch = {L'2'     , L'@'      , WCH_NONE  , L'\0'     }},
+    {.VirtualKey = '6'          , .Attributes = 0, .wch = {L'6'     , L'^'      , WCH_NONE  , ASCII_RSEP}},
+    {.VirtualKey = VK_OEM_MINUS , .Attributes = 0, .wch = {L'-'     , L'_'      , WCH_NONE  , ASCII_USEP}},
+    {.VirtualKey = 0            , .Attributes = 0, .wch = {L'\0'    , L'\0'     , L'\0'     , L'\0'     }}
+};
+
 static const ATTR_KBD_DATA VK_TO_WCHARS2 NumpadChars[] = {
     {.VirtualKey = VK_NUMPAD0, .Attributes = 0, .wch = {L'0' , WCH_NONE}},
     {.VirtualKey = VK_NUMPAD1, .Attributes = 0, .wch = {L'1' , WCH_NONE}},
