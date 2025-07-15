@@ -32,6 +32,15 @@
 // 製造元のID
 #define OEM_ID 0xff // TODO: 個人制作の場合にどうするかを調べる
 
+// ASCII の制御文字定数
+#define ASCII_DEL  0x007f
+#define ASCII_EXT  0x0003
+#define ASCII_ESC  0x001b
+#define ASCII_FSEP 0x001c
+#define ASCII_GSEP 0x001d
+#define ASCII_RSEP 0x001e
+#define ASCII_USEP 0x001f
+
 static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
     [0x00] =  VK_INVAILED,
     [0x01] = VK_ESCAPE,
@@ -300,8 +309,106 @@ static const ATTR_KBD_DATA MODIFIERS ModifierConf = {
     }
 };
 
+static const ATTR_KBD_DATA VK_TO_WCHARS4 VKCharsAll[] = {
+    {.VirtualKey = '2'          , .Attributes = 0, .wch = {L'2'     , L'@'      , WCH_NONE  , L'\0'     }},
+    {.VirtualKey = '6'          , .Attributes = 0, .wch = {L'6'     , L'^'      , WCH_NONE  , ASCII_RSEP}},
+    {.VirtualKey = VK_OEM_MINUS , .Attributes = 0, .wch = {L'-'     , L'_'      , WCH_NONE  , ASCII_USEP}},
+    {.VirtualKey = 0            , .Attributes = 0, .wch = {L'\0'    , L'\0'     , L'\0'     , L'\0'     }}
+};
+
+static const ATTR_KBD_DATA VK_TO_WCHARS3 VKCharsShCtr[] = {
+    {.VirtualKey = VK_BACK      , .Attributes = 0, .wch = {L'\b'    , L'\b'    , ASCII_DEL }},
+    {.VirtualKey = VK_CANCEL    , .Attributes = 0, .wch = {ASCII_EXT, ASCII_EXT, ASCII_EXT }},
+    {.VirtualKey = VK_ESCAPE    , .Attributes = 0, .wch = {ASCII_ESC, ASCII_ESC, ASCII_ESC }},
+    {.VirtualKey = VK_OEM_4     , .Attributes = 0, .wch = {L'['     , L'{'     , ASCII_ESC }},
+    {.VirtualKey = VK_OEM_5     , .Attributes = 0, .wch = {L'\\'    , L'|'     , ASCII_ESC }},
+    {.VirtualKey = VK_OEM_102   , .Attributes = 0, .wch = {L'\\'    , L'|'     , ASCII_FSEP}},
+    {.VirtualKey = VK_OEM_6     , .Attributes = 0, .wch = {L']'     , L'}'     , ASCII_GSEP}},
+    {.VirtualKey = VK_RETURN    , .Attributes = 0, .wch = {L'\r'    , L'\r'    , L'\n'     }},
+    {.VirtualKey = VK_SPACE     , .Attributes = 0, .wch = {L' '     , L' '     , L' '      }},
+    {.VirtualKey = 0            , .Attributes = 0, .wch = {L'\0'    , L'\0'    , L'\0'     }}
+};
+
+static const ATTR_KBD_DATA VK_TO_WCHARS2 VKCharsSh[] = {
+    {.VirtualKey = '0'          , .Attributes = 0     , .wch = {L'0'    , L')'    }},
+    {.VirtualKey = '1'          , .Attributes = 0     , .wch = {L'1'    , L'!'    }},
+    {.VirtualKey = '3'          , .Attributes = 0     , .wch = {L'3'    , L'#'    }},
+    {.VirtualKey = '4'          , .Attributes = 0     , .wch = {L'4'    , L'$'    }},
+    {.VirtualKey = '5'          , .Attributes = 0     , .wch = {L'5'    , L'%'    }},
+    {.VirtualKey = '7'          , .Attributes = 0     , .wch = {L'7'    , L'&'    }},
+    {.VirtualKey = '8'          , .Attributes = 0     , .wch = {L'8'    , L'*'    }},
+    {.VirtualKey = '9'          , .Attributes = 0     , .wch = {L'9'    , L'('    }},
+    {.VirtualKey = 'A'          , .Attributes = CAPLOK, .wch = {L'a'    , L'A'    }},
+    {.VirtualKey = 'B'          , .Attributes = CAPLOK, .wch = {L'b'    , L'B'    }},
+    {.VirtualKey = 'C'          , .Attributes = CAPLOK, .wch = {L'c'    , L'C'    }},
+    {.VirtualKey = 'D'          , .Attributes = CAPLOK, .wch = {L'd'    , L'D'    }},
+    {.VirtualKey = 'E'          , .Attributes = CAPLOK, .wch = {L'e'    , L'E'    }},
+    {.VirtualKey = 'F'          , .Attributes = CAPLOK, .wch = {L'f'    , L'F'    }},
+    {.VirtualKey = 'G'          , .Attributes = CAPLOK, .wch = {L'g'    , L'G'    }},
+    {.VirtualKey = 'H'          , .Attributes = CAPLOK, .wch = {L'h'    , L'H'    }},
+    {.VirtualKey = 'I'          , .Attributes = CAPLOK, .wch = {L'i'    , L'I'    }},
+    {.VirtualKey = 'J'          , .Attributes = CAPLOK, .wch = {L'j'    , L'J'    }},
+    {.VirtualKey = 'K'          , .Attributes = CAPLOK, .wch = {L'k'    , L'K'    }},
+    {.VirtualKey = 'L'          , .Attributes = CAPLOK, .wch = {L'l'    , L'L'    }},
+    {.VirtualKey = 'M'          , .Attributes = CAPLOK, .wch = {L'm'    , L'M'    }},
+    {.VirtualKey = 'N'          , .Attributes = CAPLOK, .wch = {L'n'    , L'N'    }},
+    {.VirtualKey = 'O'          , .Attributes = CAPLOK, .wch = {L'o'    , L'O'    }},
+    {.VirtualKey = 'P'          , .Attributes = CAPLOK, .wch = {L'p'    , L'P'    }},
+    {.VirtualKey = 'Q'          , .Attributes = CAPLOK, .wch = {L'q'    , L'Q'    }},
+    {.VirtualKey = 'R'          , .Attributes = CAPLOK, .wch = {L'r'    , L'R'    }},
+    {.VirtualKey = 'S'          , .Attributes = CAPLOK, .wch = {L's'    , L'S'    }},
+    {.VirtualKey = 'T'          , .Attributes = CAPLOK, .wch = {L't'    , L'T'    }},
+    {.VirtualKey = 'U'          , .Attributes = CAPLOK, .wch = {L'u'    , L'U'    }},
+    {.VirtualKey = 'V'          , .Attributes = CAPLOK, .wch = {L'v'    , L'V'    }},
+    {.VirtualKey = 'W'          , .Attributes = CAPLOK, .wch = {L'w'    , L'W'    }},
+    {.VirtualKey = 'X'          , .Attributes = CAPLOK, .wch = {L'x'    , L'X'    }},
+    {.VirtualKey = 'Y'          , .Attributes = CAPLOK, .wch = {L'y'    , L'Y'    }},
+    {.VirtualKey = 'Z'          , .Attributes = CAPLOK, .wch = {L'z'    , L'Z'    }},
+    {.VirtualKey = VK_OEM_1     , .Attributes = 0     , .wch = {L';'    , L':'    }},
+    {.VirtualKey = VK_OEM_2     , .Attributes = 0     , .wch = {L'/'    , L'?'    }},
+    {.VirtualKey = VK_OEM_3     , .Attributes = 0     , .wch = {L'`'    , L'~'    }},
+    {.VirtualKey = VK_OEM_7     , .Attributes = 0     , .wch = {L'\''   , L'\"'   }},
+    {.VirtualKey = VK_OEM_8     , .Attributes = 0     , .wch = {WCH_NONE, WCH_NONE}},
+    {.VirtualKey = VK_OEM_PERIOD, .Attributes = 0     , .wch = {L'.'    , L'>'    }},
+    {.VirtualKey = VK_OEM_COMMA , .Attributes = 0     , .wch = {L','    , L'<'    }},
+    {.VirtualKey = VK_OEM_PLUS  , .Attributes = 0     , .wch = {L'='    , L'+'    }},
+    {.VirtualKey = VK_TAB       , .Attributes = 0     , .wch = {L'\t'   , L'\t'   }},
+    {.VirtualKey = VK_ADD       , .Attributes = 0     , .wch = {L'+'    , L'+'    }},
+    {.VirtualKey = VK_DECIMAL   , .Attributes = 0     , .wch = {L'.'    , L'.'    }},
+    {.VirtualKey = VK_DIVIDE    , .Attributes = 0     , .wch = {L'/'    , L'/'    }},
+    {.VirtualKey = VK_MULTIPLY  , .Attributes = 0     , .wch = {L'*'    , L'*'    }},
+    {.VirtualKey = VK_SUBTRACT  , .Attributes = 0     , .wch = {L'-'    , L'-'    }},
+    {.VirtualKey = 0            , .Attributes = 0     , .wch = {L'\0'   , L'\0'   }}
+};
+
+static const ATTR_KBD_DATA VK_TO_WCHARS2 NumpadChars[] = {
+    {.VirtualKey = VK_NUMPAD0, .Attributes = 0, .wch = {L'0' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD1, .Attributes = 0, .wch = {L'1' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD2, .Attributes = 0, .wch = {L'2' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD3, .Attributes = 0, .wch = {L'3' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD4, .Attributes = 0, .wch = {L'4' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD5, .Attributes = 0, .wch = {L'5' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD6, .Attributes = 0, .wch = {L'6' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD7, .Attributes = 0, .wch = {L'7' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD8, .Attributes = 0, .wch = {L'8' , WCH_NONE}},
+    {.VirtualKey = VK_NUMPAD9, .Attributes = 0, .wch = {L'9' , WCH_NONE}},
+    {.VirtualKey = 0         , .Attributes = 0, .wch = {L'\0',0        }}
+};
+
+// 印字情報一覧
+static const ATTR_KBD_DATA VK_TO_WCHAR_TABLE PrintedCharTables[] = {
+    {(PVK_TO_WCHARS1)(VKCharsAll)   , 4, sizeof(VKCharsAll[0])},
+    {(PVK_TO_WCHARS1)(VKCharsShCtr) , 3, sizeof(VKCharsShCtr[0])},
+    {(PVK_TO_WCHARS1)(VKCharsSh)    , 2, sizeof(VKCharsSh[0])},
+    {(PVK_TO_WCHARS1)(NumpadChars)  , 2, sizeof(NumpadChars[0])},
+    {NULL, 0, 0}
+};
+
 // レイアウト情報
 const ATTR_KBD_DATA KBDTABLES TablesHH = {
+    // 印字テーブル
+    .pVkToWcharTable = PrintedCharTables,
+
     // 言語固有の処理はない
     .fLocaleFlags = 0,
     
