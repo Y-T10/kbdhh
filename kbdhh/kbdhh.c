@@ -439,12 +439,44 @@ const ATTR_KBD_DATA KBDTABLES TablesHH = {
     .dwSubType = MAKEWORD(KBD_SUB_TYPE, OEM_ID)
 };
 
+// キーの機能テーブル
+static const ATTR_KBD_DATA VK_F VKFuncTable[] = {
+    // CapsLockの機能
+    {
+        .Vk = VK_CAPITAL, .NLSFEProcType = KBDNLS_TYPE_TOGGLE,
+        .NLSFEProcCurrent = KBDNLS_INDEX_NORMAL,
+        .NLSFEProcSwitch = 0x08,
+        .NLSFEProc = {
+            {KBDNLS_SEND_BASE_VK,0},        // Base
+            {KBDNLS_ALPHANUM,0},            // Shift
+            {KBDNLS_HIRAGANA,0},            // Control
+            {KBDNLS_SEND_PARAM_VK,VK_KANA}, // Shift+Control
+            {KBDNLS_KATAKANA,0},            // Alt
+            {KBDNLS_SEND_BASE_VK,0},        // Shift+Alt
+            {KBDNLS_SEND_BASE_VK,0},        // Control+Alt
+            {KBDNLS_SEND_BASE_VK,0}         // Shift+Control+Alt
+        },
+        .NLSFEProcAlt = {
+            {KBDNLS_SEND_PARAM_VK,0}, // Base
+            {KBDNLS_SEND_PARAM_VK,0}, // Shift
+            {KBDNLS_SEND_PARAM_VK,0}, // Control
+            {KBDNLS_SEND_PARAM_VK,0}, // Shift+Control
+            {KBDNLS_SEND_BASE_VK,0},  // Alt
+            {KBDNLS_SEND_BASE_VK,0},  // Shift+Alt
+            {KBDNLS_SEND_BASE_VK,0},  // Control+Alt
+            {KBDNLS_SEND_BASE_VK,0}   // Shift+Control+Alt
+        }
+    }
+};
+
 //  言語固有のレイアウト情報
 const ATTR_KBD_DATA KBDNLSTABLES NLSTablesHH = {
     .OEMIdentifier = OEM_ID,
     .LayoutInformation = 0,
     .NumOfMouseVKey = 0,
-    .pusMouseVKey = NULL
+    .pusMouseVKey = NULL,
+    .pVkToF = VKFuncTable,
+    .NumOfVkToF = sizeof(VKFuncTable)/sizeof(VKFuncTable[0])
 };
 
 // キーボードレイアウト情報を返す
