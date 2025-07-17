@@ -42,7 +42,7 @@
 #define ASCII_USEP 0x001f
 
 static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
-    [0x00] =  VK_INVAILED,
+    [0x00] = VK_INVAILED,
     [0x01] = VK_ESCAPE,
     [0x02] = '1',
     [0x03] = '2',
@@ -100,7 +100,7 @@ static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
     [0x37] = VK_MULTIPLY | KBDMULTIVK, // Ctrl/Shiftとの組み合わせ時にSnapShotを押下する
     [0x38] = VK_LMENU,    // デフォルトのaltキー
     [0x39] = VK_SPACE,
-    [0x3a] = VK_INVAILED, // Caps Lock(VK_CAPITAL)を無効にする
+    [0x3a] = VK_CAPITAL, // Caps Lock(VK_CAPITAL)を無効にする
     [0x3b] = VK_F1,
     [0x3c] = VK_F2,
     [0x3d] = VK_F3,
