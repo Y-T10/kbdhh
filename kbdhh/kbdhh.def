@@ -1,4 +1,4 @@
-LIBRARY KBD105H
+LIBRARY KBDHH
 
 EXPORTS
     KbdLayerDescriptor    @1
