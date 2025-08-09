@@ -1,6 +1,10 @@
 #pragma once
 
-// 不要な機能を除外する
+// C23でコンパイルするかを検証する
+// TODO: 0b表記を10進数表記に直し、C99でコンパイルできるようにする
+#if __STDC_VERSION__ < 202311L
+    #error "C23 以上でコンパイルしてください"
+#endif
 
 // 不要な機能を除外する
 #define WIN32_LEAN_AND_MEAN
