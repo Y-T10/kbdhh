@@ -192,7 +192,7 @@ static const ATTR_KBD_DATA VSC_VK E0Scancode2VK[] = {
   {0X4F, KBDEXT | VK_END},
   {0x50, KBDEXT | VK_DOWN},
   {0x51, KBDEXT | VK_NEXT},
-  {0x52, KBDEXT | VK_INSERT },
+  {0x52, KBDEXT | VK_INSERT},
   {0x53, KBDEXT | VK_DELETE},
   {0x5b, KBDEXT | VK_LWIN},
   {0x5c, KBDEXT | VK_RWIN},
@@ -440,7 +440,7 @@ const ATTR_KBD_DATA KBDTABLES TablesHH = {
 
     // レイアウト情報
     .dwType = KEYBOARD_TYPE_JAPAN,
-    .dwSubType = MAKEWORD(KBD_SUB_TYPE, OEM_ID)
+    .dwSubType = 0
 };
 
 // キーの機能テーブル
