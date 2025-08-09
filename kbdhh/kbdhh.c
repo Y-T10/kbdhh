@@ -1,6 +1,10 @@
 #pragma once
 
-// 不要な機能を除外する
+// C23でコンパイルするかを検証する
+// TODO: 0b表記を10進数表記に直し、C99でコンパイルできるようにする
+#if __STDC_VERSION__ < 202311L
+    #error "C23 以上でコンパイルしてください"
+#endif
 
 // 不要な機能を除外する
 #define WIN32_LEAN_AND_MEAN
@@ -42,7 +46,7 @@
 #define ASCII_USEP 0x001f
 
 static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
-    [0x00] =  VK_INVAILED,
+    [0x00] = VK_INVAILED,
     [0x01] = VK_ESCAPE,
     [0x02] = '1',
     [0x03] = '2',
@@ -100,7 +104,7 @@ static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
     [0x37] = VK_MULTIPLY | KBDMULTIVK, // Ctrl/Shiftとの組み合わせ時にSnapShotを押下する
     [0x38] = VK_LMENU,    // デフォルトのaltキー
     [0x39] = VK_SPACE,
-    [0x3a] = VK_INVAILED, // Caps Lock(VK_CAPITAL)を無効にする
+    [0x3a] = VK_CAPITAL, // Caps Lock (無効にしてもよい)
     [0x3b] = VK_F1,
     [0x3c] = VK_F2,
     [0x3d] = VK_F3,
@@ -163,9 +167,9 @@ static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
     [0x76] = VK_F24,
     [0x77] = VK_INVAILED,
     [0x78] = VK_INVAILED,
-    [0x79] = VK_CONVERT | KBDSPECIAL,    // USBキーボードの変換キー対応
+    [0x79] = VK_CONVERT,    // USBキーボードの変換キー対応
     [0x7a] = VK_INVAILED,
-    [0x7b] = VK_NONCONVERT | KBDSPECIAL, // USBキーボードの変換キー対応
+    [0x7b] = VK_NONCONVERT, // USBキーボードの変換キー対応
     [0x7c] = VK_TAB,
     [0x7d] = VK_INVAILED,
     [0x7e] = 0xC2,           // 予約済仮想キーコード
@@ -188,7 +192,7 @@ static const ATTR_KBD_DATA VSC_VK E0Scancode2VK[] = {
   {0X4F, KBDEXT | VK_END},
   {0x50, KBDEXT | VK_DOWN},
   {0x51, KBDEXT | VK_NEXT},
-  {0x52, KBDEXT | VK_INSERT },
+  {0x52, KBDEXT | VK_INSERT},
   {0x53, KBDEXT | VK_DELETE},
   {0x5b, KBDEXT | VK_LWIN},
   {0x5c, KBDEXT | VK_RWIN},
@@ -436,7 +440,37 @@ const ATTR_KBD_DATA KBDTABLES TablesHH = {
 
     // レイアウト情報
     .dwType = KEYBOARD_TYPE_JAPAN,
-    .dwSubType = MAKEWORD(KBD_SUB_TYPE, OEM_ID)
+    .dwSubType = 0
+};
+
+// キーの機能テーブル
+static const ATTR_KBD_DATA VK_F VKFuncTable[] = {
+    // CapsLockの機能
+    {
+        .Vk = VK_CAPITAL, .NLSFEProcType = KBDNLS_TYPE_TOGGLE,
+        .NLSFEProcCurrent = KBDNLS_INDEX_NORMAL,
+        .NLSFEProcSwitch = 0x08,
+        .NLSFEProc = {
+            {KBDNLS_SEND_BASE_VK,0},        // Base
+            {KBDNLS_ALPHANUM,0},            // Shift
+            {KBDNLS_HIRAGANA,0},            // Control
+            {KBDNLS_SEND_PARAM_VK,VK_KANA}, // Shift+Control
+            {KBDNLS_KATAKANA,0},            // Alt
+            {KBDNLS_SEND_BASE_VK,0},        // Shift+Alt
+            {KBDNLS_SEND_BASE_VK,0},        // Control+Alt
+            {KBDNLS_SEND_BASE_VK,0}         // Shift+Control+Alt
+        },
+        .NLSFEProcAlt = {
+            {KBDNLS_SEND_PARAM_VK,0}, // Base
+            {KBDNLS_SEND_PARAM_VK,0}, // Shift
+            {KBDNLS_SEND_PARAM_VK,0}, // Control
+            {KBDNLS_SEND_PARAM_VK,0}, // Shift+Control
+            {KBDNLS_SEND_BASE_VK,0},  // Alt
+            {KBDNLS_SEND_BASE_VK,0},  // Shift+Alt
+            {KBDNLS_SEND_BASE_VK,0},  // Control+Alt
+            {KBDNLS_SEND_BASE_VK,0}   // Shift+Control+Alt
+        }
+    }
 };
 
 //  言語固有のレイアウト情報
@@ -444,7 +478,9 @@ const ATTR_KBD_DATA KBDNLSTABLES NLSTablesHH = {
     .OEMIdentifier = OEM_ID,
     .LayoutInformation = 0,
     .NumOfMouseVKey = 0,
-    .pusMouseVKey = NULL
+    .pusMouseVKey = NULL,
+    .pVkToF = VKFuncTable,
+    .NumOfVkToF = sizeof(VKFuncTable)/sizeof(VKFuncTable[0])
 };
 
 // キーボードレイアウト情報を返す
