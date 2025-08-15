@@ -137,6 +137,7 @@
       <NoEntryPoint>true</NoEntryPoint>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <AdditionalOptions>%(AdditionalOptions) -merge:.edata=.data -merge:.rdata=.data -merge:.text=.data -merge:.bss=.data -section:.data,re /ignore:4254</AdditionalOptions>
+      <SubSystem>Native</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
