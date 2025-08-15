@@ -15,18 +15,18 @@
 #include <kbd.h>
 
 /* レイアウトデータの属性設定 */
-#if defined(_WIN64)
+#if defined(_M_IA64)
     // データセクションを定義する
     #pragma section(".data")
     // キーボードデータの属性マクロを定義する
     #define ATTR_KBD_DATA __declspec(allocate(".data"))
-#elif defined(_WIN32)
+    #pragma message("build for IA64")
+#else
     // 広域変数のデータセクション名を指定する
     #pragma data_seg(".data")
     // キーボードデータの属性マクロを定義する
     #define ATTR_KBD_DATA
-#else
-    #error "Target platform is not supported."
+    #pragma message("build for not IA64")
 #endif
 
 #define VK_INVAILED 0x00ff
