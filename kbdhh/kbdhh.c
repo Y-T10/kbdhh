@@ -197,11 +197,13 @@ static ATTR_KBD_DATA VSC_VK E0Scancode2VK[] = {
   {0x5b, KBDEXT | VK_LWIN},
   {0x5c, KBDEXT | VK_RWIN},
   {0x5d, KBDEXT | VK_APPS},
+  {0x00, 0x00}
 };
 
 // E1接頭辞付キー
 static ATTR_KBD_DATA VSC_VK E1Scancode2VK[] = {
-    {0x1D, VK_PAUSE}
+    {0x1D, VK_PAUSE},
+    {0x00, 0x00 }
 };
 
 // キー名リスト
