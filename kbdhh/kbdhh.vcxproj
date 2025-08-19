@@ -138,6 +138,7 @@
       <ModuleDefinitionFile>$(ProjectName).def</ModuleDefinitionFile>
       <NoEntryPoint>true</NoEntryPoint>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <AdditionalOptions>%(AdditionalOptions) -merge:.edata=.data -merge:.rdata=.data -merge:.bss=.data -section:.data,r /ignore:4254</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
