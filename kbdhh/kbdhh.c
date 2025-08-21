@@ -45,7 +45,7 @@
 #define ASCII_RSEP 0x001e
 #define ASCII_USEP 0x001f
 
-static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
+static ATTR_KBD_DATA USHORT Scancode2VK[] = {
     [0x00] = VK_INVAILED,
     [0x01] = VK_ESCAPE,
     [0x02] = '1',
@@ -136,8 +136,8 @@ static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
     [0x57] = VK_F11,
     [0x58] = VK_F12,
     [0x59] = VK_CLEAR,
-    [0x5a] = VK_INVAILED, // AX105のVK_NONCONVERT
-    [0x5b] = VK_INVAILED, // AX105のVK_CONVERT
+    [0x5a] = VK_NONCONVERT, // AX105のVK_NONCONVERT
+    [0x5b] = VK_CONVERT,    // AX105のVK_CONVERT
     [0x5c] = VK_OEM_AX,
     [0x5d] = VK_EREOF,
     [0x5e] = VK_INVAILED,
@@ -178,7 +178,7 @@ static const ATTR_KBD_DATA USHORT Scancode2VK[] = {
 
 // AX105をベースにいくつかのキーを追加
 // TODO: 未対応の拡張キーを追加する
-static const ATTR_KBD_DATA VSC_VK E0Scancode2VK[] = {
+static ATTR_KBD_DATA VSC_VK E0Scancode2VK[] = {
   {0x1c, KBDEXT | VK_MEDIA_PREV_TRACK },
   {0x35, KBDEXT | VK_DIVIDE},
   {0x37, KBDEXT | VK_SNAPSHOT},
@@ -197,15 +197,17 @@ static const ATTR_KBD_DATA VSC_VK E0Scancode2VK[] = {
   {0x5b, KBDEXT | VK_LWIN},
   {0x5c, KBDEXT | VK_RWIN},
   {0x5d, KBDEXT | VK_APPS},
+  {0x00, 0x00}
 };
 
 // E1接頭辞付キー
-static const ATTR_KBD_DATA VSC_VK E1Scancode2VK[] = {
-    {0x1D, VK_PAUSE}
+static ATTR_KBD_DATA VSC_VK E1Scancode2VK[] = {
+    {0x1D, VK_PAUSE},
+    {0x00, 0x00 }
 };
 
 // キー名リスト
-static const ATTR_KBD_DATA VSC_LPWSTR KeyName[] = {
+static ATTR_KBD_DATA VSC_LPWSTR KeyName[] = {
     {0x01, L"Esc"},
     {0x0e, L"Backspace"},
     {0x0f, L"Tab"},
@@ -264,7 +266,7 @@ static const ATTR_KBD_DATA VSC_LPWSTR KeyName[] = {
 };
 
 // 0xE0接頭辞付きキー名リスト
-static const ATTR_KBD_DATA VSC_LPWSTR KeyNameExt[] = {
+static ATTR_KBD_DATA VSC_LPWSTR KeyNameExt[] = {
     {0x1c, L"Num Enter"},
     {0x35, L"Num /"},
     {0x37, L"Prnt Scrn"},
@@ -289,7 +291,7 @@ static const ATTR_KBD_DATA VSC_LPWSTR KeyNameExt[] = {
 };
 
 // 修飾キーのビット位置を指定
-static const ATTR_KBD_DATA VK_TO_BIT VKBitPos[] = {
+static ATTR_KBD_DATA VK_TO_BIT VKBitPos[] = {
     // 下記設定は必須
     { VK_SHIFT   , KBDSHIFT},
     { VK_CONTROL , KBDCTRL},
@@ -298,7 +300,7 @@ static const ATTR_KBD_DATA VK_TO_BIT VKBitPos[] = {
 };
 
 // 修飾キー情報
-static const ATTR_KBD_DATA MODIFIERS ModifierConf = {
+static ATTR_KBD_DATA MODIFIERS ModifierConf = {
     .pVkToBit = (PVK_TO_BIT)(VKBitPos),
     .wMaxModBits = 7,           // 修飾キー押下パターン個数
     .ModNumber = {
@@ -313,14 +315,14 @@ static const ATTR_KBD_DATA MODIFIERS ModifierConf = {
     }
 };
 
-static const ATTR_KBD_DATA VK_TO_WCHARS4 VKCharsAll[] = {
+static ATTR_KBD_DATA VK_TO_WCHARS4 VKCharsAll[] = {
     {.VirtualKey = '2'          , .Attributes = 0, .wch = {L'2'     , L'@'      , WCH_NONE  , L'\0'     }},
     {.VirtualKey = '6'          , .Attributes = 0, .wch = {L'6'     , L'^'      , WCH_NONE  , ASCII_RSEP}},
     {.VirtualKey = VK_OEM_MINUS , .Attributes = 0, .wch = {L'-'     , L'_'      , WCH_NONE  , ASCII_USEP}},
     {.VirtualKey = 0            , .Attributes = 0, .wch = {L'\0'    , L'\0'     , L'\0'     , L'\0'     }}
 };
 
-static const ATTR_KBD_DATA VK_TO_WCHARS3 VKCharsShCtr[] = {
+static ATTR_KBD_DATA VK_TO_WCHARS3 VKCharsShCtr[] = {
     {.VirtualKey = VK_BACK      , .Attributes = 0, .wch = {L'\b'    , L'\b'    , ASCII_DEL }},
     {.VirtualKey = VK_CANCEL    , .Attributes = 0, .wch = {ASCII_EXT, ASCII_EXT, ASCII_EXT }},
     {.VirtualKey = VK_ESCAPE    , .Attributes = 0, .wch = {ASCII_ESC, ASCII_ESC, ASCII_ESC }},
@@ -333,7 +335,7 @@ static const ATTR_KBD_DATA VK_TO_WCHARS3 VKCharsShCtr[] = {
     {.VirtualKey = 0            , .Attributes = 0, .wch = {L'\0'    , L'\0'    , L'\0'     }}
 };
 
-static const ATTR_KBD_DATA VK_TO_WCHARS2 VKCharsSh[] = {
+static ATTR_KBD_DATA VK_TO_WCHARS2 VKCharsSh[] = {
     {.VirtualKey = '0'          , .Attributes = 0     , .wch = {L'0'    , L')'    }},
     {.VirtualKey = '1'          , .Attributes = 0     , .wch = {L'1'    , L'!'    }},
     {.VirtualKey = '3'          , .Attributes = 0     , .wch = {L'3'    , L'#'    }},
@@ -385,7 +387,7 @@ static const ATTR_KBD_DATA VK_TO_WCHARS2 VKCharsSh[] = {
     {.VirtualKey = 0            , .Attributes = 0     , .wch = {L'\0'   , L'\0'   }}
 };
 
-static const ATTR_KBD_DATA VK_TO_WCHARS2 NumpadChars[] = {
+static ATTR_KBD_DATA VK_TO_WCHARS2 NumpadChars[] = {
     {.VirtualKey = VK_NUMPAD0, .Attributes = 0, .wch = {L'0' , WCH_NONE}},
     {.VirtualKey = VK_NUMPAD1, .Attributes = 0, .wch = {L'1' , WCH_NONE}},
     {.VirtualKey = VK_NUMPAD2, .Attributes = 0, .wch = {L'2' , WCH_NONE}},
@@ -400,7 +402,7 @@ static const ATTR_KBD_DATA VK_TO_WCHARS2 NumpadChars[] = {
 };
 
 // 印字情報一覧
-static const ATTR_KBD_DATA VK_TO_WCHAR_TABLE PrintedCharTables[] = {
+static ATTR_KBD_DATA VK_TO_WCHAR_TABLE PrintedCharTables[] = {
     {(PVK_TO_WCHARS1)(VKCharsAll)   , 4, sizeof(VKCharsAll[0])},
     {(PVK_TO_WCHARS1)(VKCharsShCtr) , 3, sizeof(VKCharsShCtr[0])},
     {(PVK_TO_WCHARS1)(VKCharsSh)    , 2, sizeof(VKCharsSh[0])},
@@ -409,7 +411,7 @@ static const ATTR_KBD_DATA VK_TO_WCHAR_TABLE PrintedCharTables[] = {
 };
 
 // レイアウト情報
-const ATTR_KBD_DATA KBDTABLES TablesHH = {
+ATTR_KBD_DATA KBDTABLES TablesHH = {
     // 印字テーブル
     .pVkToWcharTable = PrintedCharTables,
 
@@ -444,7 +446,7 @@ const ATTR_KBD_DATA KBDTABLES TablesHH = {
 };
 
 // キーの機能テーブル
-static const ATTR_KBD_DATA VK_F VKFuncTable[] = {
+static ATTR_KBD_DATA VK_F VKFuncTable[] = {
     // CapsLockの機能
     {
         .Vk = VK_CAPITAL, .NLSFEProcType = KBDNLS_TYPE_TOGGLE,
@@ -474,7 +476,7 @@ static const ATTR_KBD_DATA VK_F VKFuncTable[] = {
 };
 
 //  言語固有のレイアウト情報
-const ATTR_KBD_DATA KBDNLSTABLES NLSTablesHH = {
+ATTR_KBD_DATA KBDNLSTABLES NLSTablesHH = {
     .OEMIdentifier = OEM_ID,
     .LayoutInformation = 0,
     .NumOfMouseVKey = 0,
@@ -484,11 +486,11 @@ const ATTR_KBD_DATA KBDNLSTABLES NLSTablesHH = {
 };
 
 // キーボードレイアウト情報を返す
-const KBDTABLES* KbdLayerDescriptor() {
+PKBDTABLES KbdLayerDescriptor() {
     return &TablesHH;
 }
 
 // 言語固有の機能情報を返す
-const KBDNLSTABLES* KbdNlsLayerDescriptor() {
+PKBDNLSTABLES KbdNlsLayerDescriptor() {
     return &NLSTablesHH;
 }
