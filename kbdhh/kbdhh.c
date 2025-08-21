@@ -1,11 +1,5 @@
 #pragma once
 
-// C23でコンパイルするかを検証する
-// TODO: 0b表記を10進数表記に直し、C99でコンパイルできるようにする
-#if __STDC_VERSION__ < 202311L
-    #error "C23 以上でコンパイルしてください"
-#endif
-
 // 不要な機能を除外する
 #define WIN32_LEAN_AND_MEAN
 #define NOCOM
@@ -304,14 +298,14 @@ static ATTR_KBD_DATA MODIFIERS ModifierConf = {
     .pVkToBit = (PVK_TO_BIT)(VKBitPos),
     .wMaxModBits = 7,           // 修飾キー押下パターン個数
     .ModNumber = {
-        [0b000] = 0,            // キー入力なし
-        [0b001] = 1,            // Shift押下
-        [0b010] = 2,            // Control押下
-        [0b011] = 3,            // Shift,Control押下
-        [0b100] = SHFT_INVALID, // Alt押下時に文字列を出力しない
-        [0b101] = SHFT_INVALID,
-        [0b110] = SHFT_INVALID,
-        [0b111] = SHFT_INVALID,
+        [0x00] = 0,            // キー入力なし
+        [0x01] = 1,            // Shift押下
+        [0x02] = 2,            // Control押下
+        [0x03] = 3,            // Shift,Control押下
+        [0x04] = SHFT_INVALID, // Alt押下時に文字列を出力しない
+        [0x05] = SHFT_INVALID,
+        [0x06] = SHFT_INVALID,
+        [0x07] = SHFT_INVALID,
     }
 };
 
