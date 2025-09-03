@@ -50,3 +50,38 @@ EXPORTS
     KbdLayerDescriptor    @1
     KbdNlsLayerDescriptor @2
 ```
+
+### リソースファイル
+キーボードレイアウトDLLのプロパティ画面では、DLLのバージョン情報や対応言語を確認することができる．
+これらの情報はリソースファイルにて定義され、DLLのビルド時に埋め込まれる．
+リソースファイルの実装は下図のとおりで、Cのプリプロセス命令のサブセットで記述される．
+```
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE              VFT_DLL
+#define VER_FILESUBTYPE           VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR   "Custom 105 layout"
+#define VER_INTERNALNAME_STR      "KBDHH"
+#define VER_ORIGINALFILENAME_STR  "kbdhh.dll"
+#define VER_LANGNEUTRAL
+
+#include "common.ver"
+```
+4-9行目では以下の情報を持つのマクロ定数を定義する．
+11行目では、これらのマクロ定数をファイル`common.ver`内の雛形に当てはめ、バージョン情報の定義を生成する．
+
+| マクロ定数 | 内容 |
+| :-----------------------| :--- |
+|`VER_FILETYPE` | ファイルの種類 |
+|`VER_FILESUBTYPE` | ファイルのサブタイプ|
+|`VER_FILEDESCRIPTION_STR` |ファイルの概要文|
+|`VER_INTERNALNAME_STR`|ファイルの内部名|
+|`VER_ORIGINALFILENAME_STR`|ファイル名|
+|`VER_LANGNEUTRAL`|ロケールを指定しない|
+
+`common.ver`内の雛形を使用するため、マクロ定数の定義では以下のマクロが持つ値を定める必要がある．
+* `VER_FILETYPE`
+* `VER_FILESUBTYPE`
+* `VER_FILEDESCRIPTION_STR`
+* `VER_INTERNALNAME_STR`
