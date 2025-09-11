@@ -13,6 +13,36 @@ KBDHHは、WindowsにてUS配列のキーボードによる日本語入力を実
 - プラットフォーム：実行環境のアーキテクチャ
 - 構成環境：`Release`
 
+## インストール
+日本語環境のWindowsにインストールする方法を紹介する．
+インストールに失敗した場合に備え、Windowsの復旧手段を用意しておくことを***強く勧める***．
+
+まず、生成されたDLLファイル`kbdhh.dll`をWindowsのシステムフォルダ`C:\Windows\System32`内に置く．
+次に、レジストリキー`HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\i8042prt\Parameters`のエントリを以下のように変更する．
+エントリが存在しない場合、「設定」アプリにてハードウェアキーボードレイアウトを変更し、エントリを生成する必要がある．
+
+```
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\i8042prt\Parameters]
+"LayerDriver JPN"="kbdhh.dll"
+"OverrideKeyboardIdentifier"="KBDHH"
+"OverrideKeyboardType"=dword:00000007
+"OverrideKeyboardSubtype"=dword:00000001
+```
+
+最後にWindowsの再起動を実行する．インストールが成功した場合、再起動後にログイン画面が表示される．
+
+## インストールが失敗した場合
+再起動後にログイン画面に到達できないなら、WindowsによるDLLの読み込みが失敗したことになる．
+この場合、インストールにて変更したエントリを元の値に戻した状態で起動すれば再度ログインできるようになる．
+Windowsの外からレジストリを変更するには`chntpw`を使用すればよい．
+このツールはLinux上で動作し、ディスク内のレジストリデータを編集することができる．
+そのため外部メディアからUbuntu等を起動できれば、そこからWindowsがインストールされたディスクにアクセスし、エントリを修復することができる．
+
+* `chntpw`のホームページ: https://pogostick.net/~pnh/ntpasswd/
+* `chntpw`の使用例: https://www.nexia.jp/comapny/index.html
+
 ## DLLのビルド
 ### 構成マネージャ
 実行環境に合わせて構成、プラットフォームを決定する．
