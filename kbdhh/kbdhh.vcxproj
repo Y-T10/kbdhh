@@ -137,6 +137,7 @@
     <ResourceCompile Include="kbdhh.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\readme.md" />
     <None Include="kbdhh.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

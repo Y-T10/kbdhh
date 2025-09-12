@@ -28,5 +28,6 @@
     <None Include="kbdhh.def">
       <Filter>ソース ファイル</Filter>
     </None>
+    <None Include="..\readme.md" />
   </ItemGroup>
 </Project>
